@@ -30,7 +30,7 @@ except:
 
 # Auphonic API url
 API_URL = "https://auphonic.com/api/simple/productions.json"
-
+API_DETAILS_URL = "https://auphonic.com/api/production/{uuid}.json"
 
 def soundProcessWithAuphonic(f):
     """ Main function.
@@ -40,7 +40,7 @@ def soundProcessWithAuphonic(f):
     #    print "Usage: batch-upload.py [file [file ...]]"
     #    return
 
-    print "\nWelcome to the Auphonic upload script!"
+    #print "\nWelcome to the Auphonic upload script!"
 
     #print "\nPlease enter your Auphonic account information:"
     username = 'ashuven63@gmail.com'
@@ -64,8 +64,10 @@ def soundProcessWithAuphonic(f):
     #    print "- %s" % f
     input_files['input_file'] = open(f, 'r')
     print "opened file"
-    requests.post(API_URL, data=data, files=input_files,
+    response_upload = requests.post(API_URL, data=data, files=input_files,
                               auth=HTTPBasicAuth(str(username), str(password)))
+    #uuid = response_upload.json()['data']['uuid']
+
 
     print "\nFinished!"
     print "Please check your auphonic account or email for status updates!\n"

@@ -1,1 +1,3 @@
+celery-with-redis
+django-celery
 requests
