@@ -7,7 +7,9 @@ from myRecordUpload.soundProcessing import soundProcessWithAuphonic
 from myRecordUpload.models import Document
 from myRecordUpload.forms import DocumentForm
 from django.templatetags.static import static
+from myRecordUpload.tasks import soundProcessingWithAuphonicTask
 from urllib import urlretrieve
+
 
 def index(request):
     # Handle file upload
@@ -22,7 +24,8 @@ def index(request):
         if form.is_valid():
             newdoc = Document(docfile = request.FILES['docfile'])
             newdoc.docfile.save('Ashu.wav',request.FILES['docfile'])
-            soundProcessWithAuphonic('documents/Ashu.wav')
+            #soundProcessWithAuphonic('documents/Ashu.wav')
+            soundProcessingWithAuphonicTask.delay('../documents/ashu.mp3')
             return HttpResponseRedirect(reverse('myRecordUpload.views.index'))
     else:
         form = DocumentForm() # A empty, unbound form
